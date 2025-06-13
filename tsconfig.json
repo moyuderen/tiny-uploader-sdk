@@ -12,6 +12,8 @@
     "verbatimModuleSyntax": true,
     "moduleDetection": "force",
     "noEmit": true,
+    "declaration": true,
+    "declarationDir": "./dist/types",
 
     /* Linting */
     "strict": true,
@@ -21,5 +23,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src"]
+  "include": ["src", "example"]
 }
