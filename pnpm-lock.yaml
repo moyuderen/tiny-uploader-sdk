@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       hashion:
-        specifier: ^0.0.9
-        version: 0.0.9(spark-md5@3.0.2)
+        specifier: ^0.0.11
+        version: 0.0.11(spark-md5@3.0.2)
     devDependencies:
       '@types/node':
         specifier: ^24.0.1
@@ -493,8 +493,8 @@ packages:
     resolution: {integrity: sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ==}
     engines: {node: '>=8'}
 
-  hashion@0.0.9:
-    resolution: {integrity: sha512-DCb9YH3TzHlMRAeunM9pDSCWgotrqAvrhhmS/bf3DIh6V2Q2UH8KUXk6+zoscxekg3fAbHBFO3yCVdJGYF3A5g==}
+  hashion@0.0.11:
+    resolution: {integrity: sha512-4Ov9Sgt+Ld2lmgvTbED67+k5Ns82LoLCufKDTnBUjtZFmfS8ljO/ZMGZVtc7Ee/0dL1JOhbFOXptHJLlJjvkxA==}
     peerDependencies:
       spark-md5: ^3.0.2
 
@@ -1122,7 +1122,7 @@ snapshots:
 
   has-flag@4.0.0: {}
 
-  hashion@0.0.9(spark-md5@3.0.2):
+  hashion@0.0.11(spark-md5@3.0.2):
     dependencies:
       spark-md5: 3.0.2
 

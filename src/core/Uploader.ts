@@ -1,7 +1,7 @@
 import Container from './Container'
 import type { UserAttributes } from './Container'
 import Event from './Event'
-import {FileContext} from './FileContext'
+import { FileContext } from './FileContext'
 import { defaultOptions } from './defaults'
 import { Callbacks, FileStatus } from './constants'
 import { extend, isString, isFunction, isPromise } from '../helper'

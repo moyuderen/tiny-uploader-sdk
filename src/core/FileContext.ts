@@ -208,13 +208,14 @@ export class FileContext {
         (Date.now() - startTime) / 1000,
         's'
       )
-    } catch (error) {
+      this.abortRead = null
+    } catch {
       this.setErrorMessage('File read failed')
       this.changeStatus(FileStatus.Init)
       this.uploader.emitCallback(Callbacks.FileReadFail, this)
-      throw error
+      throw new Error('File read failed')
     } finally {
-      this.abortRead = null
+      //
     }
 
     this.createChunks()
@@ -222,30 +223,34 @@ export class FileContext {
   }
 
   async _computeHash() {
-    const updateReadProgress = throttle((progress) => {
-      this.readProgress = progress
-      this.uploader.emitCallback(Callbacks.FileReadProgress, this)
-    }, 200)
+    try {
+      const updateReadProgress = throttle((progress) => {
+        this.readProgress = progress
+        this.uploader.emitCallback(Callbacks.FileReadProgress, this)
+      }, 200)
 
-    if (this.options.useWebWoker && this.hasher.hashionName !== 'sparkMd5Webworker') {
-      throw new Error(`
+      if (this.options.useWebWoker && this.hasher.hashionName !== 'sparkMd5Webworker') {
+        throw new Error(`
         Please install "SparkWorker" plugin -> npm i hashion;
         https://www.npmjs.com/package/hashion
       `)
-    }
-    const { promise, abort } = this.hasher.computedHash(
-      {
-        file: this.rawFile,
-        chunkSize: this.chunkSize
-        // useWebWoker: this.options.useWebWoker
-      },
-      ({ progress: readProgress }) => updateReadProgress(readProgress)
-    )
+      }
+      const { promise, abort } = this.hasher.computedHash(
+        {
+          file: this.rawFile,
+          chunkSize: this.chunkSize
+          // useWebWoker: this.options.useWebWoker
+        },
+        ({ progress: readProgress }) => updateReadProgress(readProgress)
+      )
 
-    this.abortRead = abort
-    const hashResult = await promise
-    updateReadProgress(hashResult.progress)
-    return hashResult
+      this.abortRead = abort
+      const hashResult = await promise
+      updateReadProgress(hashResult.progress)
+      return hashResult
+    } catch (error) {
+      throw error
+    }
   }
 
   _processData(processType: ProcessType) {
@@ -343,6 +348,10 @@ export class FileContext {
 
     if (this.isReady() && !!this.options.checkRequest) {
       await this.checkRequest()
+      // TODO: 如何优雅的取消check
+      if (this.status === FileStatus.Pause) {
+        return
+      }
     }
 
     if (this.isUploadSuccess()) {

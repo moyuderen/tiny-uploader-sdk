@@ -4,11 +4,11 @@ const typeOfTest = (value: any, type: string) => {
 }
 
 export const isDefined = function (thing: any) {
-  return typeOfTest(thing, 'undefined')
+  return typeof thing !== 'undefined'
 }
 
 export const isFunction = function (thing: any) {
-  return typeOfTest(thing, 'function')
+  return typeof thing === 'function'
 }
 
 export const isObject = (thing: any) => {
