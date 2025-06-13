@@ -1,4 +1,4 @@
-import FileContext from '../core/FileContext'
+import { FileContext } from '../core/FileContext'
 import type { CheckStatus, ProcessType } from '../core/constants'
 import type { UserFile } from './'
 

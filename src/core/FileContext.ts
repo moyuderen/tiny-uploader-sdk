@@ -1,5 +1,5 @@
-import Chunk from './Chunk'
-import Uploader from './Uploader'
+import { Chunk } from './Chunk'
+import { Uploader } from './Uploader'
 import { FileStatus, Callbacks, CheckStatus, ChunkStatus, ProcessType } from './constants'
 import {
   generateUid,
@@ -12,9 +12,8 @@ import {
 } from '../helper'
 import type { UserFile, UploaderOptions } from '../types'
 import type { Hashion } from 'hashion'
-import type { FileStatusType, ChunkStatusType } from './constants'
 
-class FileContext {
+export class FileContext {
   /** uploader实例 */
   uploader: Uploader
   /** uploader配置项 */
@@ -26,7 +25,7 @@ class FileContext {
   /** 文件唯一ID */
   uid: string
   /** 文件状态 */
-  status: FileStatusType | ''
+  status: FileStatus | ''
   /** 文件状态变更记录 */
   prevStatusLastRecord: string[]
   /** 文件二进制 */
@@ -124,7 +123,7 @@ class FileContext {
     return renderSize(this.size)
   }
 
-  changeStatus(newStatus: FileStatusType) {
+  changeStatus(newStatus: FileStatus) {
     if (newStatus !== this.status || newStatus === FileStatus.Reading) {
       this.prevStatusLastRecord.push(this.status)
       this.status = newStatus
@@ -267,7 +266,7 @@ class FileContext {
     }
 
     // 统一状态修改方法
-    const updateChunksStatus = (status: ChunkStatusType) => {
+    const updateChunksStatus = (status: ChunkStatus) => {
       this.chunks.forEach((chunk) => {
         chunk.status = status
         if (status === ChunkStatus.Success) {
@@ -531,5 +530,3 @@ class FileContext {
     }
   }
 }
-
-export default FileContext

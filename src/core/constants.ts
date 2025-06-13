@@ -36,10 +36,13 @@ export const FileStatus = {
   Pause: 'pause',
 
   /** 文件恢复上传 */
-  Resume: 'resume'
-}
+  Resume: 'resume',
 
-export type FileStatusType = (typeof FileStatus)[keyof typeof FileStatus]
+  /** 文件删除 */
+  Removed: 'removed'
+} as const
+
+export type FileStatus = (typeof FileStatus)[keyof typeof FileStatus]
 
 /**
  * chunk上传状态
@@ -59,9 +62,9 @@ export const ChunkStatus = {
 
   /** chunk上传失败（所有重试次数完成后 都不成功） */
   Fail: 'fail'
-}
+} as const
 
-export type ChunkStatusType = (typeof ChunkStatus)[keyof typeof ChunkStatus]
+export type ChunkStatus = (typeof ChunkStatus)[keyof typeof ChunkStatus]
 
 /**
  * 回调函数名称
@@ -119,7 +122,7 @@ export const Callbacks = {
 
   /** 所有文件上传成功 */
   AllFileSuccess: 'allFileSuccess'
-}
+} as const
 
 /**
  * check 文件状态
@@ -152,6 +155,6 @@ export const ProcessType = {
 
   /** merge接口 */
   Merge: 'merge'
-}
+} as const
 
 export type ProcessType = (typeof ProcessType)[keyof typeof ProcessType]

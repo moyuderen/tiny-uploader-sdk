@@ -1,11 +1,11 @@
 import { generateUid, isFunction, parseData } from '../helper'
-import { ChunkStatus, FileStatus, ProcessType, type ChunkStatusType } from './constants'
+import { ChunkStatus, FileStatus, ProcessType } from './constants'
 import { request, type Request, type RequestResult } from './request'
-import FileContext from './FileContext'
-import Uploader from './Uploader'
+import { FileContext } from './FileContext'
+import { Uploader } from './Uploader'
 import type { UploaderOptions } from '../types'
 
-class Chunk {
+export class Chunk {
   /** Uploader实例 */
   uploader: Uploader
   /** Uploader配置 */
@@ -31,7 +31,7 @@ class Chunk {
   /** chunk在索引值 */
   chunkIndex: number
   /** chunk状态 */
-  status: ChunkStatusType
+  status: ChunkStatus
   /** chunk bit 起始位置 */
   startByte: number
   /** chunk bit 结束位置 */
@@ -181,5 +181,3 @@ class Chunk {
     }
   }
 }
-
-export default Chunk

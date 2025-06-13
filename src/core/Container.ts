@@ -1,4 +1,4 @@
-import Uploader from './Uploader'
+import { Uploader } from './Uploader'
 import { each, extend } from '../helper'
 
 type Listener = {
@@ -104,7 +104,7 @@ class Container {
     e.preventDefault()
     e.stopPropagation()
     if (e instanceof DragEvent) {
-      this.uploader.addFiles(e.dataTransfer?.files)
+      this.uploader.addFiles(e.dataTransfer?.files as unknown as File[])
     }
   }
 

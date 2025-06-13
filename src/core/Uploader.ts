@@ -1,7 +1,7 @@
 import Container from './Container'
 import type { UserAttributes } from './Container'
 import Event from './Event'
-import FileContext from './FileContext'
+import {FileContext} from './FileContext'
 import { defaultOptions } from './defaults'
 import { Callbacks, FileStatus } from './constants'
 import { extend, isString, isFunction, isPromise } from '../helper'
@@ -9,7 +9,7 @@ import { Hashion } from 'hashion'
 import { Spark } from 'hashion/spark'
 import type { UploaderOptions, UserUploaderOptions, Plugin, BeforeAdd, UserFile } from '../types'
 
-class Uploader {
+export class Uploader {
   /** 挂载事件容器实例 */
   private container: Container
   /** 事件派发监听 */
@@ -21,7 +21,7 @@ class Uploader {
   /** 文件列表 */
   fileList: Array<FileContext>
 
-  constructor(options: UserUploaderOptions) {
+  constructor(options?: UserUploaderOptions) {
     this.container = new Container(this)
     this.event = new Event()
 
@@ -179,7 +179,7 @@ class Uploader {
       if (file.isResume()) {
         // console.log(file.prevStatusLastRecord)
         // [uploading, pause, resume]  回到pause之前的状态
-        const prevStatus = file.prevStatusLastRecord[file.prevStatusLastRecord.length - 2]
+        const prevStatus = file.prevStatusLastRecord[file.prevStatusLastRecord.length - 2] as FileStatus
 
         if (prevStatus) {
           file.changeStatus(prevStatus)
@@ -274,5 +274,3 @@ class Uploader {
     this.container.destroy()
   }
 }
-
-export default Uploader
