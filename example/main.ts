@@ -1,52 +1,23 @@
+// dist
+// import { create, FileStatus, ChunkStatus, CheckStatus, Callbacks } from '../dist/uploader.cjs'
+// dev
+import { create, FileStatus, Callbacks, CheckStatus, FileContext, Uploader } from '../src'
+import {
+  actionList,
+  userOptions,
+  customRequest,
+  checkRequest,
+  mergeRequest
+} from './custom-options'
+import { SparkWorker } from 'hashion/sparkWorker'
+
 // @ts-ignore
 const { createApp, ref, reactive, onMounted, watch } = Vue
-/**
- * dist
- */
-// import { create, FileStatus, ChunkStatus, CheckStatus, Callbacks } from '../dist/uploader.cjs'
-
-/**
- * dev
- */
-import { create, FileStatus, Callbacks, CheckStatus, FileContext, Uploader} from '../src'
-import { requestSucceed, customRequest, checkRequest, mergeRequest } from './api'
-import { SparkWorker } from 'hashion/sparkWorker'
 
 const app = createApp({
   setup() {
     const drawer = ref(false)
-    const actionList = [
-      'http://localhost:3000/file/upload',
-      'https://jsonplaceholder.typicode.com/posts'
-    ]
-    const options = reactive({
-      drag: true,
-      // input相关
-      accept: '*',
-      multiple: true,
-      // 文件相关
-      limit: 10,
-      autoUpload: true,
-      addFailToRemove: true,
-      chunkSize: 2,
-      fakeProgress: true,
-      withHash: true,
-      // useWebWoker: true,
-      // 上传相关
-      name: 'file',
-      action: 'http://localhost:3000/file/upload',
-      withCredentials: true,
-      data: {
-        bucket: 'test-public',
-        filePath: 'files/test01/'
-      },
-      headers: {
-        userauth: 'xxxxx-xxxx-xxxxx'
-      },
-      maxConcurrency: 6,
-      maxRetries: 3,
-      retryInterval: 1000
-    })
+    const options = reactive(userOptions)
     const uploader = ref<Uploader>(null)
     const files = ref([])
 
@@ -67,7 +38,6 @@ const app = createApp({
       ],
       chunkSize: options.chunkSize * 1024 * 1024,
       customRequest,
-      requestSucceed,
       checkRequest,
       mergeRequest
     })
@@ -75,71 +45,71 @@ const app = createApp({
     uploader.value.use(SparkWorker)
 
     uploader.value.on(Callbacks.Exceed, (file: FileContext, _fileList: FileContext[]) => {
-      console.log(`Exceed ---- ${file.name} ---- ${file.status}`)
+      console.log(`Exceed: ${file.name} - ${file.status}`)
     })
 
     uploader.value.on(Callbacks.FileChange, (file: FileContext, fileList: FileContext[]) => {
-      console.log(`FileChange ---- ${file.name} ---- ${file.status}`)
+      console.log(`FileChange: ${file.name} - ${file.status}`)
       files.value = fileList
     })
 
     uploader.value.on(Callbacks.FileAdded, (file: FileContext, _fileList: FileContext[]) => {
-      console.log(`FileAdded ---- ${file.name} ---- ${file.status}`)
+      console.log(`FileAdded: ${file.name} - ${file.status}`)
     })
 
     uploader.value.on(Callbacks.FilesAdded, (fileList: FileContext[]) => {
-      console.log(`FilesAdded ----`, fileList)
+      console.log(`FilesAdded: `, fileList)
     })
 
     uploader.value.on(Callbacks.FileReadStart, (file: FileContext, _fileList: FileContext[]) => {
-      console.log(`FileReadStart ---- ${file.name} ---- ${file.status}`)
+      console.log(`FileReadStart: ${file.name} - ${file.status}`)
     })
 
     uploader.value.on(Callbacks.FileReadProgress, (file: FileContext, _fileList: FileContext[]) => {
-      console.log(`FileReadProgress ---- ${file.name} ---- ${file.status}---- ${file.readProgress}`)
+      console.log(`FileReadProgress: ${file.name} - ${file.status} - ${file.readProgress}`)
     })
 
     uploader.value.on(Callbacks.FileReadEnd, (file: FileContext, _fileList: FileContext[]) => {
-      console.log(`FileReadEnd ---- ${file.name} ---- ${file.status}`)
+      console.log(`FileReadEnd: ${file.name} - ${file.status}`)
     })
 
     uploader.value.on(Callbacks.FileRemove, (file: FileContext, _fileList: FileContext[]) => {
-      console.log(`FileRemove ---- ${file.name} ---- ${file.status}`)
+      console.log(`FileRemove:  ${file.name} - ${file.status}`)
     })
 
     uploader.value.on(Callbacks.FileProgress, (file: FileContext, _fileList: FileContext[]) => {
-      console.log(`FileProgress ---- ${file.name} ---- ${file.status}---- ${file.progress}`)
+      console.log(`FileProgress: ${file.name} - ${file.status} - ${file.progress}`)
     })
 
     uploader.value.on(Callbacks.FileFail, (file: FileContext, _fileList: []) => {
-      console.log(`FileFail ---- ${file.name} ---- ${file.status}`)
+      console.log(`FileFail: ${file.name} - ${file.status}`)
     })
 
     uploader.value.on(Callbacks.FileUploadFail, (file: FileContext, _fileList: FileContext[]) => {
-      console.log(`FileUploadFail ---- ${file.name} ---- ${file.status}`)
+      console.log(`FileUploadFail: ${file.name} - ${file.status}`)
     })
 
     uploader.value.on(
       Callbacks.FileUploadSuccess,
       (file: FileContext, _fileList: FileContext[]) => {
-        console.log(`FileUploadSuccess ---- ${file.name} ---- ${file.status}`)
+        console.log(`FileUploadSuccess: ${file.name} - ${file.status}`)
       }
     )
 
     uploader.value.on(Callbacks.FileSuccess, (file: FileContext, _fileList: FileContext[]) => {
-      console.log(`FileSuccess ---- ${file.name} ---- ${file.status}`)
+      console.log(`FileSuccess:  ${file.name} - ${file.status}`)
     })
 
     uploader.value.on(Callbacks.FilePause, (file: FileContext, _fileList: FileContext[]) => {
-      console.log(`FilePause ---- ${file.name} ---- ${file.status}`)
+      console.log(`FilePause: ${file.name} - ${file.status}`)
     })
 
     uploader.value.on(Callbacks.FileResume, (file: FileContext, _fileList: FileContext[]) => {
-      console.log(`FileResume ---- ${file.name} ---- ${file.status}`)
+      console.log(`FileResume: ${file.name} - ${file.status}`)
     })
 
     uploader.value.on(Callbacks.AllFileSuccess, (fileList: FileContext[]) => {
-      console.log(`AllFileSuccess ---- `, fileList)
+      console.log(`AllFileSuccess: `, fileList)
     })
 
     uploader.value.setDefaultFileList([
@@ -205,4 +175,3 @@ const app = createApp({
 // @ts-ignore
 app.use(ElementPlus)
 app.mount('#app')
-

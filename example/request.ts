@@ -1,4 +1,4 @@
-import { isBlob } from '../src/helper'
+import { Utils } from '../src'
 
 const logger = (e: any) => {
   console.warn('接口reject', e)
@@ -57,7 +57,7 @@ request.interceptors.request.use(
 request.interceptors.response.use(
   function (response: any) {
     const { data } = response
-    return isBlob(data) ? disposeBlobResponse(response) : disposeJsonResponse(response)
+    return Utils.isBlob(data) ? disposeBlobResponse(response) : disposeJsonResponse(response)
   },
   function (error: any) {
     logger(error)
