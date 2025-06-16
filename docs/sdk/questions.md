@@ -3,4 +3,4 @@ layout: doc
 outline: deep
 ---
 
-# 问题
+# FAQ

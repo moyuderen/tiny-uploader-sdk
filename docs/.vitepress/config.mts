@@ -22,11 +22,20 @@ export default defineConfig({
             link: 'https://github.com/moyuderen/tiny-uploader-sdk'
           },
           {
-            text: 'CHANGELOG',
-            link: 'https://github.com/moyuderen/tiny-uploader-sdk/CHANGELOG.md'
+            text: 'Changelog',
+            link: 'https://github.com/moyuderen/tiny-uploader-sdk/blob/main/CHANGELOG.md'
           }
         ]
-      }
+      },
+      {
+        text: 'Server',
+        items: [
+          {
+            text: 'Server useage',
+            link: 'https://moyuderen.github.io/tiny-uploader-server/'
+          },
+        ]
+      },
     ],
 
     sidebar: {
@@ -41,7 +50,7 @@ export default defineConfig({
           ]
         },
         {
-          text: '其他',
+          text: 'Other',
           collapsed: false,
           items: [
             { text: '实例', link: '/sdk/instance' },
@@ -50,11 +59,7 @@ export default defineConfig({
           ]
         },
         {
-          text: 'Mock 接口',
-          link: '/sdk/server'
-        },
-        {
-          text: '问题',
+          text: 'FAQ',
           link: '/sdk/questions'
         }
       ],
