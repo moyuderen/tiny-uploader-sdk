@@ -2,7 +2,7 @@
   "name": "@tinyuploader/sdk",
   "version": "2.3.0-alpha.0",
   "type": "module",
-  "private": true,
+  "private": false,
   "publishConfig": {
     "access": "public"
   },
@@ -60,7 +60,7 @@
     "change:stable": "pnpm changeset pre exit",
     "change": "pnpm changeset",
     "change-version": "pnpm changeset version",
-    "push-npm": "pnpm install && pnpm build && pnpm publish @tinyuploader/sdk"
+    "push-npm": "pnpm install && pnpm build && pnpm -F @tinyuploader/sdk publish"
   },
   "peerDependencies": {
     "hashion": "^0.0.11"
@@ -73,5 +73,10 @@
     "vite": "^6.3.5",
     "vite-plugin-dts": "^4.5.4",
     "vitepress": "^1.6.3"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
   }
 }
