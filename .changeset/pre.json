@@ -1,0 +1,10 @@
+{
+  "mode": "pre",
+  "tag": "alpha",
+  "initialVersions": {
+    "@tinyuploader/sdk": "2.2.1"
+  },
+  "changesets": [
+    "social-towns-lick"
+  ]
+}

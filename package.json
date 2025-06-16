@@ -1,6 +1,6 @@
 {
-  "name": "tiny-uploader-sdk",
-  "version": "0.0.0",
+  "name": "@tinyuploader/sdk",
+  "version": "2.3.0-alpha.0",
   "type": "module",
   "private": true,
   "publishConfig": {
@@ -53,12 +53,20 @@
     "format": "prettier --write src/",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs"
+    "docs:preview": "vitepress preview docs",
+    "change:alpha": "pnpm changeset pre enter alpha",
+    "change:beta": "pnpm changeset pre enter beta",
+    "change:rc": "pnpm changeset pre enter rc",
+    "change:stable": "pnpm changeset pre exit",
+    "change": "pnpm changeset",
+    "change-version": "pnpm changeset version",
+    "publish": "pnpm install && pnpm build && pnpm publish @tinyuploader/sdk"
   },
   "peerDependencies": {
     "hashion": "^0.0.11"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.29.4",
     "@types/node": "^24.0.1",
     "prettier": "^3.5.3",
     "typescript": "~5.8.3",
