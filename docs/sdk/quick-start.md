@@ -10,8 +10,8 @@ npm i @tinyuploader/sdk -S
 
 使用类创建实例
 
-```javascript
-import Uploader from '@tinyuploader/sdk'
+```typescript
+import { Uploader } from '@tinyuploader/sdk'
 
 const uploader = new Uploader({
   action: 'https://jsonplaceholder.typicode.com/posts'
@@ -23,7 +23,7 @@ uploader.assignBrowse(document.querySelector('.uploader-btn'))
 
 使用暴露的 create 函数创建
 
-```javascript
+```typescript
 import { create } from '@tinyuploader/sdk'
 
 const uploader = create({
@@ -42,6 +42,6 @@ uploader.assignBrowse(document.querySelector('.uploader-btn'))
 
 ## [mock 接口](/sdk/server.html#模拟接口请求)
 
-## [阅读文档](https://moyuderen.github.io/uploader/sdk/quick-start.html)
+## [Document](https://moyuderen.github.io/tiny-uploader-sdk/)
 
-## [更新日志](https://github.com/moyuderen/uploader/blob/main/packages/sdk/CHANGELOG.md)
+## [Changelog](https://github.com/moyuderen/tiny-uploader-sdk/blob/main/CHANGELOG.md)
