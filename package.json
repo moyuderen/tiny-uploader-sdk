@@ -6,14 +6,32 @@
   "publishConfig": {
     "access": "public"
   },
-  "description": "",
-  "keywords": [],
+  "description": "大文件分片上传解决方案sdk, 可用于各种UI框架",
+  "keywords": [
+    "uploader",
+    "upload",
+    "file",
+    "big file",
+    "retry",
+    "pause",
+    "resume",
+    "上传",
+    "分片上传",
+    "大文件",
+    "并发",
+    "重试",
+    "断点续传",
+    "秒传"
+  ],
   "license": "MIT",
   "author": "moyuderen",
-  "homepage": "",
+  "homepage": "https://github.com/moyuderen/tiny-uploader-sdk/quick-start.html",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/moyuderen/tiny-uploader-sdk"
+  },
+  "bugs": {
+    "url": "https://github.com/moyuderen/tiny-uploader-sdk/issues"
   },
   "files": [
     "dist"
