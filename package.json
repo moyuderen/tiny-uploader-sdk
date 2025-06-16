@@ -60,7 +60,7 @@
     "change:stable": "pnpm changeset pre exit",
     "change": "pnpm changeset",
     "change-version": "pnpm changeset version",
-    "publish": "pnpm install && pnpm build && pnpm publish @tinyuploader/sdk"
+    "push-npm": "pnpm install && pnpm build && pnpm publish @tinyuploader/sdk"
   },
   "peerDependencies": {
     "hashion": "^0.0.11"
