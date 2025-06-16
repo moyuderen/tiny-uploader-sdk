@@ -1,8 +1,8 @@
 import type { FileContext, RequestOptions } from '../src'
 import { request } from './request'
 
-// const BASE_URL = 'http://localhost:3000/file'
-const BASE_URL = 'https://uploader-server-seven.vercel.app/file'
+const BASE_URL = 'http://localhost:3000/file'
+// const BASE_URL = 'https://tiny-uploader-server.vercel.app/file'
 
 export const requestSucceed = (response: any) => {
   const { status } = response
