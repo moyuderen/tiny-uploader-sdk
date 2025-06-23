@@ -1,5 +1,11 @@
 # @tinyuploader/sdk
 
+## 2.3.0-alpha.2
+
+### Patch Changes
+
+- export defaultOptions
+
 ## 2.3.0-alpha.0
 
 ### Minor Changes

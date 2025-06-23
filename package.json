@@ -1,6 +1,6 @@
 {
   "name": "@tinyuploader/sdk",
-  "version": "2.3.0-alpha.0",
+  "version": "2.3.0-alpha.2",
   "type": "module",
   "private": false,
   "publishConfig": {
@@ -25,13 +25,13 @@
   ],
   "license": "MIT",
   "author": "moyuderen",
-  "homepage": "https://github.com/moyuderen/tiny-uploader-sdk/",
+  "homepage": "https://moyuderen.github.io/uploader/sdk/quick-start.html",
   "repository": {
     "type": "git",
-    "url": "https://github.com/moyuderen/tiny-uploader-sdk"
+    "url": ""
   },
   "bugs": {
-    "url": "https://github.com/moyuderen/tiny-uploader-sdk/issues"
+    "url": ""
   },
   "files": [
     "dist"
