@@ -1,5 +1,11 @@
 # @tinyuploader/sdk
 
+## 2.3.0-alpha.4
+
+### Patch Changes
+
+- fix: when canceled reading no longer throws an error
+
 ## 2.3.0-alpha.3
 
 ### Patch Changes
