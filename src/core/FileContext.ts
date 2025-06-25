@@ -210,7 +210,7 @@ export class FileContext {
       )
       this.abortRead = null
     } catch (e: any) {
-      if (e && e.message && e.message.toLowerCase.includes('canceled')) {
+      if (e && e.message && e.message.toLowerCase().includes('canceled')) {
         // 如果是取消操作，则不抛出错误
       } else {
         this.setErrorMessage('File read failed')

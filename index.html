@@ -102,6 +102,7 @@
               </el-tooltip>
             </div>
             <div class="file-status">{{ file.status }}</div>
+            <div class="file-status">{{ file.errroMessage }}</div>
             <div class="file-progress">Read {{ file.readProgress.toFixed(2) }}%</div>
             <div class="file-progress">Upload {{ (file.progress * 100).toFixed(2) }}%</div>
             <div class="file-progress">{{ file.renderSize }}</div>
