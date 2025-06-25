@@ -209,13 +209,16 @@ export class FileContext {
         's'
       )
       this.abortRead = null
-    } catch {
-      this.setErrorMessage('File read failed')
+    } catch (e: any) {
+      if (e && e.message && e.message.toLowerCase.includes('canceled')) {
+        // 如果是取消操作，则不抛出错误
+      } else {
+        this.setErrorMessage('File read failed')
+      }
+
       this.changeStatus(FileStatus.Init)
       this.uploader.emitCallback(Callbacks.FileReadFail, this)
       throw new Error('File read failed')
-    } finally {
-      //
     }
 
     this.createChunks()
