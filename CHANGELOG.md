@@ -1,5 +1,11 @@
 # @tinyuploader/sdk
 
+## 2.3.0-alpha.5
+
+### Patch Changes
+
+- fix: toLowerCase base on 2.3.0-alpha.4
+
 ## 2.3.0-alpha.4
 
 ### Patch Changes

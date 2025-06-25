@@ -5,6 +5,7 @@
     "@tinyuploader/sdk": "2.2.1"
   },
   "changesets": [
+    "afraid-chicken-marry",
     "blue-kiwis-film",
     "great-rules-sing",
     "late-ends-go",
