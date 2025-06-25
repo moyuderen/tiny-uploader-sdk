@@ -1,5 +1,11 @@
 # @tinyuploader/sdk
 
+## 2.3.0-alpha.3
+
+### Patch Changes
+
+- options's data and headers, export function type
+
 ## 2.3.0-alpha.2
 
 ### Patch Changes

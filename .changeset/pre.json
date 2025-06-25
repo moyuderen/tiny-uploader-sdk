@@ -5,6 +5,7 @@
     "@tinyuploader/sdk": "2.2.1"
   },
   "changesets": [
+    "great-rules-sing",
     "late-ends-go",
     "social-towns-lick"
   ]
