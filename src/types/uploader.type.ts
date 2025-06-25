@@ -96,10 +96,10 @@ export type UploaderOptions = {
   withCredentials: boolean
 
   /** 自定义上传参数 */
-  data: Record<string, any>
+  data: Record<string, any> | (() => Record<string, any>)
 
   /** 上传接口headers */
-  headers: Record<string, string>
+  headers: Record<string, string> | (() => Record<string, string>)
 
   /** 接口是否成功逻辑 */
   requestSucceed: (xhr: any) => boolean
