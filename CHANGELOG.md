@@ -1,5 +1,11 @@
 # @tinyuploader/sdk
 
+## 2.3.0-alpha.6
+
+### Patch Changes
+
+- fix: update cancel keyword
+
 ## 2.3.0-alpha.5
 
 ### Patch Changes
