@@ -6,7 +6,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "description": "大文件分片上传解决方案sdk, 可用于各种UI框架",
+  "description": "Large file chunked upload solution SDK, compatible with various UI frameworks.",
   "keywords": [
     "uploader",
     "upload",
@@ -25,13 +25,13 @@
   ],
   "license": "MIT",
   "author": "moyuderen",
-  "homepage": "https://moyuderen.github.io/uploader/sdk/quick-start.html",
+  "homepage": "https://moyuderen.github.io/tiny-uploader-sdk/en/",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/moyuderen/tiny-uploader-sdk"
   },
   "bugs": {
-    "url": ""
+    "url": "https://github.com/moyuderen/tiny-uploader-sdk/issues"
   },
   "files": [
     "dist"
