@@ -1,15 +1,10 @@
 {
   "mode": "pre",
-  "tag": "alpha",
+  "tag": "rc",
   "initialVersions": {
-    "@tinyuploader/sdk": "2.2.1"
+    "@tinyuploader/sdk": "2.3.0-alpha.6"
   },
   "changesets": [
-    "afraid-chicken-marry",
-    "blue-kiwis-film",
-    "great-rules-sing",
-    "late-ends-go",
-    "social-towns-lick",
-    "upset-waves-dance"
+    "cold-suns-lie"
   ]
 }

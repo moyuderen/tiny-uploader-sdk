@@ -1,5 +1,11 @@
 # @tinyuploader/sdk
 
+## 2.3.0-rc.0
+
+### Patch Changes
+
+- rc version
+
 ## 2.3.0-alpha.6
 
 ### Patch Changes

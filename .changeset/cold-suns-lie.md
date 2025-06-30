@@ -2,4 +2,4 @@
 '@tinyuploader/sdk': patch
 ---
 
-export defaultOptions
+rc version
