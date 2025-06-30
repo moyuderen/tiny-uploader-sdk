@@ -1,69 +1,67 @@
-# Props
+# Configuration
 
 ## accept
 
-`<input type="file" accept='video/*'>`[accept](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/accept) attribute
+Equivalent to `<input type="file" accept='video/*'>`. See the [accept](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/accept) attribute.
 
-- **Type** `string | string[]`
-- **Default** `*`
-- **Using**
+- **Type:** `string | string[]`
+- **Default:** `*`
+- **Usage examples:**
 
-  1. Can be configured when initializing
+  1. Set during instance initialization:
 
-  ```js
+  ```ts
   const uploader = new Uploader({
     accept: '.jpg'
   })
   ```
 
-  2. Can be configured when calling `assignBrowse` method, which will override the initial configuration
+  2. Set when calling the `assignBrowse` method (overrides initial config):
 
-  ```js
+  ```ts
   uploader.assignBrowse(domNode, { accept: ['.png'] })
   ```
 
 ## multiple
 
-`<input type="file" multiple>`[multiple](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/multiple) attribute
+Equivalent to `<input type="file" multiple>`. See the [multiple](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/multiple) attribute.
 
-- **Type** `boolean`
-- **Default** `true`
+- **Type:** `boolean`
+- **Default:** `true`
 
 ## fileList
 
-Default file list
+Default list of files.
 
-- **Type** [`UserFile[]`](/sdk/interface.md#user-file),
-- **Default** `[]`
+- **Type:** [`UserFile[]`](/en/interface.md#user-file)
+- **Default:** `[]`
 
 ## limit
 
-Upload file limit max count
+Maximum number of files allowed to upload.
 
-- **Type** `number`
-- **Default** `10`
+- **Type:** `number`
+- **Default:** `10`
 
-> [!NOTE]
-> if value is `0`, will not limit count
+> [!NOTE]  
+> Set to `0` for unlimited files.
 
 ## autoUpload
 
-auto upload after select file
+Whether to automatically start uploading after selecting files.
 
-- **Type** `boolean`
-- **Default** `true`
+- **Type:** `boolean`
+- **Default:** `true`
 
 ## customGenerateUid
 
-file uid generate function, if not function, will use sdk own function
+Custom function to generate file IDs. If not a function or no value is returned, a default function is used.
 
-**Type** `function | null`
+- **Type:** `function | null`
+- **Params:** `file`, see [FileContext](/en/instance.md#file-context)
+- **Default:** `null`
 
-**Params** `file`, [FileContext](./instance.md#file-context)
-
-**Default** `null`
-
-**Example**
+**Example:**
 
 ```ts
 let id = 0
@@ -77,77 +75,83 @@ const uploader = new Uploader({
 
 ## chunkSize
 
-size of chunk when upload file, unit is `bit`, for example `1024 * 1024 * 4` means `4M`
+File chunk size in bits. For example, `1024 * 1024 * 4` means 4MB.
 
-**Type** `number`
-
-**Default** `1024 * 1024 * 2`
+- **Type:** `number`
+- **Default:** `1024 * 1024 * 2`
 
 ## addFailToRemove
 
-if add file failed, will remove file from fileList
+Whether to remove files from the list if adding fails.
 
-**Type** `boolean`
-
-**Default** `true`
+- **Type:** `boolean`
+- **Default:** `true`
 
 ## fakeProgress
 
-show max progress value when upload file, because when chunk upload failed, chunk progress will be 0, so the file progress will have a back and forth jittering
+Whether to show the maximum progress of file upload.
 
-**Type** `boolean`
+- **Type:** `boolean`
+- **Default:** `true`
 
-**Default** `true`
-
+> [!NOTE]  
+> If set to `false`, a failed chunk will reset its progress to 0, which may cause the progress bar to flicker or regress.
 
 ## withHash
 
-是否通过`spark-md5`生成文件的`hash`值
+Whether to enable `hash` calculation via `spark-md5`.
 
-**类型** `boolean`
-**默认值** `true`
+- **Type:** `boolean`
+- **Default:** `true`
 
-## useWebWoker <Badge type="danger" text=" 2.2.0之前名称computedhashInWorker" />
+> [!NOTE]  
+> Uses the `Spark` plugin from [`hashion`](https://www.npmjs.com/package/hashion) by default.
 
-计算文件`hash`值时使用[`Web Workers`](https://developer.mozilla.org/zh-CN/docs/Web/API/Web_Workers_API/Using_web_workers)计算，为`false`时在 js 线程中计算
+## useWebWoker <Badge type="danger" text="Previously named computedhashInWorker in 2.2.0" />
 
-**类型** `boolean`
-**默认值** `true`
+Whether to use a [Web Worker](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers) to compute file hash. If `false`, hash is computed in the JS thread.
+
+- **Type:** `boolean`
+- **Default:** `true`
+
+> [!IMPORTANT]  
+> To enable `useWebWoker`, install and use the `SparkWorker` plugin from `hashion`.
+
+**Using the `SparkWorker` plugin:**
+
+```ts
+import { SparkWorker } from 'hashion/sparkWorker'
+
+uploader.use(SparkWorker)
+```
 
 ## beforeAdd
 
-所有上传动作开始上传前的钩子, 返回`false` 或者 返回 `Promise` 且被 `reject` 则停止上传，参数是 `file`, 停止后会从`fileList`中删除，并且触发`Callbacks.FileRemove`回调
+Hook executed before uploading starts. Return `false` or a `Promise` that rejects to cancel the upload. The parameter is a [`file`](/en/instance.md#file-context). Cancelled files will be removed from `fileList` and trigger the [`Callbacks.FileRemove`](/en/callbacks.md#fileremove) callback.
 
-**类型** `function`
+- **Type:** `function`
+- **Default:** `const beforeAdd = (file) => true`
 
-**默认值** `const beforeAdd = (file) => true`
+**Examples:**
 
-**示例**
-
-```js
-// 同步代码
+```ts
+// Synchronous
 const uploader = new Uploader({
-  beforeAdd(file) {
-    if (file.size > 1024 * 1024 * 10) {
-      return false
-    }
+  beforeAdd(file: FileContext) {
+    return file.size <= 1024 * 1024 * 10
   }
 })
 
-// 异步代码 校验图片的宽高
+// Asynchronous: Validate image dimensions
 const uploader = new Uploader({
-  beforeAdd(file) {
+  beforeAdd(file: FileContext) {
     return new Promise((resolve, reject) => {
       const _URL = window.URL || window.webkitURL
       const image = new Image()
       image.src = _URL.createObjectURL(file)
       image.onload = () => {
         const isValid = image.width === 100 && image.height === 100
-        if (isValid) {
-          resolve()
-        } else {
-          reject(file)
-        }
+        isValid ? resolve() : reject(file)
       }
     })
   }
@@ -156,34 +160,26 @@ const uploader = new Uploader({
 
 ## beforeRemove
 
-删除文件前的钩子, 返回`false` 或者 返回 `Promise` 且被 `reject` 则不会删除
+Hook before deleting a file. Return `false` or a `Promise` that rejects to cancel deletion.
 
-**类型** `function`
+- **Type:** `function`
+- **Default:** `const beforeRemove = (file: FileContext) => true`
 
-**默认值** `const beforeRemove = (file) => true`
-
-**示例**
+**Examples:**
 
 ```js
-// 返回true或者false
+// Return true or false
 const uploader = new Uploader({
-  beforeRemove(file) {
-    if (file.name === 'hah') {
-      return true
-    }
-    return false
+  beforeRemove(file: FileContext) {
+    return file.name === 'hah'
   }
 })
 
-// 返回Promise
+// Return Promise
 const uploader = new Uploader({
   beforeRemove(file) {
     return new Promise((resolve, reject) => {
-      if (file.name === 'hah') {
-        resolve()
-      } else {
-        reject()
-      }
+      file.name === 'hah' ? resolve() : reject()
     })
   }
 })
@@ -191,82 +187,71 @@ const uploader = new Uploader({
 
 ## name
 
-上传二进制文件数据，参数名称
+The field name for the binary file data sent to the backend.
 
-- **类型** `string`
-- **默认值** `file`
+- **Type:** `string`
+- **Default:** `file`
 
 ## action
 
-上传文件的接口地址
+The endpoint URL for file uploads.
 
-- **类型** `string`
+- **Type:** `string`
+- **Default:** `''`
 
-- **默认值** `''`
+## [withCredentials](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/withCredentials)
 
-## withCredentials
-
-[XMLHttpRequest：withCredentials 属性](https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest/withCredentials)
-
-**类型** `boolean`
-
-**默认值** `true`
+- **Type:** `boolean`
+- **Default:** `true`
 
 ## headers
 
-上传接口携带自定义 headers
+Custom headers for upload requests.
 
-**类型** `object`
-
-**默认值** `{} | Function`
+- **Type:** `object | Function`
+- **Default:** `{}`
 
 ## data
 
-上传接口携带自定义参数
+Custom data to send with the upload request.
 
-**类型** `object`
-
-**默认值** `{} | Function`
+- **Type:** `object | Function`
+- **Default:** `{}`
 
 ## processData
 
-处理自定义的data参数
+Custom handler to process the `data` parameter.
 
-**类型** `Function`
-
-**默认值** `(data, processType: ProcessType) => data`, [ProcessType](./enum.md#process-type)
+- **Type:** `Function`
+- **Default:** `(data, processType: ProcessType) => data`, see [ProcessType](./enum.md#process-type)
 
 ## maxRetries
 
-上传中 chunk 上传失败时的重试次数
+Maximum number of retry attempts for a failed chunk upload.
 
-**类型** `number`
-
-**默认值** `3`
+- **Type:** `number`
+- **Default:** `3`
 
 ## retryInterval
 
-上传中 chunk 上传失败时的重试的间隔时间，单位是`ms`
+Interval (in ms) between retries for a failed chunk upload.
 
-**类型** `number`
-
-**默认值** `1000`
+- **Type:** `number`
+- **Default:** `1000`
 
 ## maxConcurrency
 
-上传中 chunk 最大并发数，防止过多请求
+Maximum number of concurrent chunk uploads to avoid excessive requests.
 
-**类型** `number`
-
-**默认值** `6`
+- **Type:** `number`
+- **Default:** `6`
 
 ## requestSucceed
 
-校验是否上传成功，根据接口定义，通过 http 的 `status` 或者 `code` 判断，参数是`xhr` 对象
+Function to validate if the upload request succeeded, based on `xhr`. Must return a `boolean`.
 
-**类型** `function`
-
-**默认值**
+- **Type:** `(xhr: any) => boolean`
+- **Default:**
 
 ```js
 const requestSucceed = (xhr) => {
@@ -274,15 +259,15 @@ const requestSucceed = (xhr) => {
 }
 ```
 
-> [!NOTE]
-> xhr 属性参考 -> [XMLHttpRequest](https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest)
+> [!NOTE]  
+> Refer to [XMLHttpRequest](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest) for available properties.
 
-**示例**
+**Custom Example:**
 
-```js{2-3}
+```js
 const requestSucceed = (xhr) => {
   const { code } = xhr.response
-  return code === '00000' // 代码接口成功
+  return code === '00000'
 }
 
 const uploader = new Uploader({
@@ -290,64 +275,62 @@ const uploader = new Uploader({
 })
 ```
 
-## checkRequest <Badge type="danger" text=" 2.2.0之前名称checkFileRequest" />
+## checkRequest <Badge type="danger" text="Previously named checkFileRequest in 2.2.0" />
 
-校验文件，秒传，断点续传。使用时保证 withHash 开启，因为校验时会用到 hash 去后端校验。参数是 file
+Verifies file upload status for instant uploads and resuming uploads. Requires `withHash` to be enabled. The parameter is a [`file`](/en/instance.md#file-context).
 
-**类型** `function`
+- **Type:** [`CheckRequest`](/en/interface.md#check-request)
+- **Default:**
 
-**默认值**
-
-```js{3}
-const checkRequest = (file) => {
+```js
+const checkRequest = (file: FileContext, data?: Record<string, any>, headers?: Record<string, string>) => {
   return {
     status: CheckStatus.None
   }
 }
 ```
 
-> [!NOTE]
->
-> [CheckStatus.None](./enum.md#check-status)
+> [!NOTE]  
+> See [CheckStatus](./enum.md#check-status)
 
-**示例**
+**Example:**
 
-```js{15,22-25,32-35}
+```js
 const CheckStatus = {
-  Part: 'part', // 部分上传成功
-  WaitMerge: 'waitMerge', // 准备合并
-  Success: 'success', // 全部上传成功
-  None: 'none' // 没有上传
+  Part: 'part',
+  WaitMerge: 'waitMerge',
+  Success: 'success',
+  None: 'none'
 }
 
 const checkFileApi = (hash) => {
-  // ...
+  // ...API call to check file
 }
 
-// 情况一；默认不校验
+// Case 1: Default, no validation
 async checkRequest(file, query, headers) {
   const hash = file.hash
   const { data } = await checkFileApi(hash)
   return { status: CheckStatus.None }
 }
 
-// 情况二；根据文件hash,文件已经上传
+// Case 2: File fully uploaded
 async checkRequest(file, query, headers) {
   const hash = file.hash
   const { data } = await checkFileApi(hash)
   return {
     status: CheckStatus.Success,
-    data: 'http://baidu.com' // data是一个上传成功文件的url地址
+    data: 'http://baidu.com'
   }
 }
 
-// 情况三；根据文件hash,文件部分上传成功
+// Case 3: Partial upload completed
 async checkRequest(file, query, headers) {
   const hash = file.hash
   const { data } = await checkFileApi(hash)
   return {
     status: CheckStatus.Part,
-    data: [0, 2, 4, 6, 8, 10] // data是已经上传成功chunk的chunkIndex
+    data: [0, 2, 4, 6, 8, 10]
   }
 }
 
@@ -358,24 +341,20 @@ const uploader = new Uploader({
 
 ## mergeRequest
 
-所有 chunk 上传成功之后调用的 merge 通知后端合并文件的函数, 参数 file，一般后端会返回一个文件的 obs 地址。 返回`false` 或者 返回 `Promise` 且被 `reject`则合并失败
+Function to notify backend to merge file after all chunks are uploaded. If it returns `false` or a rejected `Promise`, the merge is considered failed.
 
-**类型** `function`
+- **Type:** [`MergeRequest`](/en/interface.md#merge-request)
+- **Default:** `const mergeRequest = (file) => true`
 
-**默认值** `const mergeRequest = (file) => true`
+**Example:**
 
-**示例**
-
-```js
-const mergeFileApi = (hash) => {
-  // ...
-}
-
+```ts
 const mergeRequest = async (file, query, headers) => {
   const { data } = await mergeFileApi(file)
-  file.path = 'http://baidu.com' // [!code --]   // 2.2.0默认会设置url
+  file.path = 'http://baidu.com' // 2.2.0+ will set `url` by default
   return data.url
 }
+
 const uploader = new Uploader({
   mergeRequest
 })
@@ -383,21 +362,21 @@ const uploader = new Uploader({
 
 ## customRequest
 
-自定义上传接口, 默认为null,使用内置的[request](/sdk/interface.md#request)请求
+Custom upload request function. If `null`, uses the built-in [`request`](/en/interface.md#request) function.
 
-**类型** `null | function`
+- **Type:** `null | Request`
+- **Default:** `null`
 
-**默认值** `null`
+> [!WARNING]  
+> When using `customRequest`, you must return an `abort` method to support cancellation.
 
-> [!WARNING]
-> 如果自定义customRequest, 需要返回一个`abort`方法来取消请求
-
-**示例** [CustomRequestOption](/sdk/interface.md#custom-request-option)
+**Example:** See [RequestOptions](/en/interface.md#request)
 
 ```ts
-const customRequest = (options: CustomRequestOption) => {
+const customRequest = (options: RequestOptions) => {
   const { action, data, query, headers, name, withCredentials, onSuccess, onFail, onProgress } =
     options
+
   const realData = {
     fileHashCode: data.hash,
     uploadId: data.fileId,
@@ -408,14 +387,14 @@ const customRequest = (options: CustomRequestOption) => {
     hash: data.hash,
     filename: data.filename,
     index: data.index,
-    // error: '1',
     ...query
   }
-  const formData = new FormData()
 
+  const formData = new FormData()
   Object.keys(realData).forEach((key) => {
     formData.append(key, realData[key])
   })
+
   const CancelToken = axios.CancelToken
   const source = CancelToken.source()
 
@@ -428,8 +407,8 @@ const customRequest = (options: CustomRequestOption) => {
     withCredentials: withCredentials,
     onUploadProgress: onProgress
   })
-    .then((res) => {
-      onSuccess(action, res)
+    .then((response) => {
+      onSuccess(action, response)
     })
     .catch((e) => {
       onFail(e)

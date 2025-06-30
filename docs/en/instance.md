@@ -1,18 +1,18 @@
-# 实例
+# Instances
 
 ## Uploader {#uploader}
 
 ```typescript
 class Uploader {
-  /** 挂载事件容器实例 */
+  /** Mounted event container instance */
   private container;
-  /** 事件派发监听 */
+  /** Event dispatcher and listener */
   private event;
-  /** 配置项 */
+  /** Configuration options */
   options: UploaderOptions;
-  /** 计算hash方法实例 */
+  /** Hashing instance */
   hasher: Hashion | null;
-  /** 文件列表 */
+  /** File list */
   fileList: Array<FileContext>;
   constructor(options?: UserUploaderOptions);
   on(name: string, fn: Function): void;
@@ -45,49 +45,49 @@ class Uploader {
 
 ```typescript
 class FileContext {
-  /** uploader实例 */
+  /** Uploader instance */
   uploader: Uploader;
-  /** uploader配置项 */
+  /** Uploader configuration */
   options: UploaderOptions;
-  /** 计算hash的方法 */
+  /** Hashing method */
   hasher: Hashion;
-  /** 文件ID */
+  /** File ID */
   id?: string;
-  /** 文件唯一ID */
+  /** Unique file ID */
   uid: string;
-  /** 文件状态 */
+  /** File status */
   status: FileStatus | '';
-  /** 文件状态变更记录 */
+  /** File status change history */
   prevStatusLastRecord: string[];
-  /** 文件二进制 */
+  /** Raw file object */
   rawFile: File;
-  /** 文件名称 */
+  /** File name */
   name: string;
-  /** 文件大小 */
+  /** File size */
   size: number;
-  /** 文件类型 */
+  /** File type */
   type: string;
-  /** 文件hash值 */
+  /** File hash */
   hash: string;
-  /** 文件http地址 */
+  /** File HTTP URL */
   url: string;
-  /** 文件上传进度 */
+  /** File upload progress */
   progress: number;
-  /** 分片大小 */
+  /** Chunk size */
   chunkSize: number;
-  /** 分块chunk集合 */
+  /** Chunk collection */
   chunks: Chunk[];
-  /** 分片总数 */
+  /** Total number of chunks */
   totalChunks: number;
-  /** 上传中chunk集合 */
+  /** Currently uploading chunks */
   uploadingChunks: Set<Chunk>;
-  /** 文件读取进度（hash计算进度） */
+  /** File read progress (hash calculation progress) */
   readProgress: number;
-  /** 错误信息 */
+  /** Error message */
   errorMessage: string;
-  /** 文件自定义data */
+  /** Custom file data */
   data: Record<string, any>;
-  /** abortRead */
+  /** Abort read handler */
   abortRead: any;
   constructor(file: File, uploader: Uploader, defaults: UserFile | null);
   generateId(): string;
@@ -132,56 +132,56 @@ class FileContext {
 }
 ```
 
-> [!NOTE]
-> 枚举[`FileStatus`](enum.md#file-status)
+> [!NOTE]  
+> See enum [`FileStatus`](enum.md#file-status)
 
 ## Chunk {#chunk}
 
 ```typescript
 class Chunk {
-  /** Uploader实例 */
+  /** Uploader instance */
   uploader: Uploader;
-  /** Uploader配置 */
+  /** Uploader configuration */
   options: UploaderOptions;
-  /** FileContext实例 */
+  /** FileContext instance */
   file: FileContext;
-  /** 文件唯一ID */
+  /** Unique file ID */
   fileId: string;
-  /** 文件二进制数据 */
+  /** Raw file object */
   rawFile: File;
-  /** 文件hash值 */
+  /** File hash */
   fileHash: string;
-  /** 文件名称 */
+  /** File name */
   filename: string;
-  /** 文件大小 */
+  /** Total file size */
   totalSize: number;
-  /** 分片大小 */
+  /** Chunk size */
   chunkSize: number;
-  /** 分片总数 */
+  /** Total number of chunks */
   totalChunks: number;
-  /** chunk唯一id */
+  /** Unique chunk ID */
   uid: string;
-  /** chunk在索引值 */
+  /** Chunk index */
   chunkIndex: number;
-  /** chunk状态 */
+  /** Chunk status */
   status: ChunkStatus;
-  /** chunk bit 起始位置 */
+  /** Chunk start byte */
   startByte: number;
-  /** chunk bit 结束位置 */
+  /** Chunk end byte */
   endByte: number;
-  /** chunk 大小 */
+  /** Chunk size */
   size: number;
-  /** chunk最大重试次数 */
+  /** Maximum retry attempts for the chunk */
   maxRetries: number;
-  /** chunk 真实上传进度 */
+  /** Actual upload progress */
   progress: number;
-  /** chunk fake进度 */
+  /** Simulated upload progress */
   fakeProgress: number;
-  /** timer */
+  /** Timer */
   timer: any;
-  /** 上传请求 */
+  /** Upload request */
   request: RequestResult | null;
-  /** 自定义上传请求 */
+  /** Custom upload request */
   customRequest: Request_2;
   constructor(file: FileContext, index: number);
   onSuccess(e: any, response: any, resolve: Function, reject: Function): void;
@@ -203,5 +203,5 @@ class Chunk {
 }
 ```
 
-> [!NOTE]
-> 枚举[`ChunkStatus`](enum.md#chunk-status)
+> [!NOTE]  
+> See enum [`ChunkStatus`](enum.md#chunk-status)

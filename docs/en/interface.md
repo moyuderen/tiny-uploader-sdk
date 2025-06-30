@@ -1,24 +1,27 @@
-# 接口类型
+# Interface Types
 
 ## UserFile {#user-file}
 
 ```typescript
 type UserFile = {
+  /** File ID */
   id: string | number;
+  /** File name */
   name: string;
+  /** File URL */
   url: string;
 } & File;
 ```
 
-## RequestData 上传接口默认参数 {request-data}
+## RequestData Default Upload Parameters {#request-data}
 
 ```ts
 type RequestData = {
-  [name]: blob // chunk二进制数据， name是配置中的名称，默认是file
-  hash: string // 文件hash
-  id: string // chunk id
-  fileId: string // file id
-  index: number // 从0开始
+  [name]: blob // Chunk binary data; the key `name` comes from configuration, defaults to `file`
+  hash: string // File hash
+  id: string // Chunk ID
+  fileId: string // File ID
+  index: number // Starting from 0
   filename: string
   size: number
   totalSize: number
@@ -29,68 +32,68 @@ type RequestData = {
 ## Request {#request}
 
 ```ts
-export function request(options) {
-  const {
-    method = 'POST',
-    withCredentials = true,
-    responseType = 'json',
-    action,
-    data,
-    query,
-    headers,
-    name,
-    onSuccess,
-    onFail,
-    onProgress
-  } = options
+function request(options: RequestOptions): RequestResult
 
-  let xhr = new XMLHttpRequest()
-  xhr.responseType = responseType
-  xhr.withCredentials = withCredentials
-  xhr.open(method, action, true)
+type RequestOptions = {
+  /** HTTP method type */
+  method?: 'POST' | 'GET' | 'PUT';
+  /** Whether to include credentials such as cookies or Authorization headers */
+  withCredentials?: boolean;
+  /** Expected response type */
+  responseType?: 'json' | 'blob' | 'arraybuffer' | 'text' | '';
+  /** Upload API endpoint */
+  action: string;
+  /** Custom upload parameters */
+  data: Record<string, any>;
+  /** Upload request headers */
+  headers: Record<string, string>;
+  /** Backend field name to receive the file */
+  name: string;
+  /** Custom query data, including user-defined file data */
+  query: Record<string, any>;
+  /** Success callback */
+  onSuccess?: (e: any, request: any) => void;
+  /** Failure callback */
+  onFail?: (e: any, request: any) => void;
+  /** Upload progress callback */
+  onProgress?: (e: ProgressEvent) => void;
+};
 
-  const formData = new FormData()
-  Object.entries(data).forEach(([key, value]) => formData.append(key, value))
-
-  // 'setRequestHeader' on 'XMLHttpRequest': The object's state must be OPENED
-  if ('setRequestHeader' in xhr) {
-    Object.entries(headers).forEach(([key, value]) => xhr.setRequestHeader(key, value))
-  }
-
-  xhr.addEventListener('timeout', () => onFail(new Error('Request timed out'), xhr))
-  xhr.upload.addEventListener('progress', onProgress)
-  xhr.addEventListener('error', onFail, false)
-  xhr.addEventListener('readystatechange', (e) => {
-    if (xhr.readyState !== 4) return
-    if (xhr.status < 200 || xhr.status >= 300) {
-      onFail(new Error(`xhr: status === ${xhr.status}`), xhr)
-      return
-    }
-    onSuccess(e, xhr)
-  })
-  xhr.send(formData)
-
-  return {
-    abort() {
-      xhr.abort()
-      xhr = null
-    }
-  }
-}
+type RequestResult = {
+  abort: () => void;
+  canceled?: boolean;
+};
 ```
 
-## CustomRequestOption {#custom-request-option}
+## CheckRequest {#check-request}
 
-```typescript
-type CustomRequestOption = {
-  action: string
-  name: string
-  withCredentials: boolean
-  headers: object
-  data: RequestData
-  query: object
-  onSuccess: (e, response) => void
-  onFail: (e) => void
-  onProgress: (e) => void
+```ts
+type CheckRequestResult = {
+  status: CheckStatus
+  data?: any
 }
+
+/**
+ * Check file upload status
+ */
+type CheckRequest = (
+  file: FileContext,
+  data: Record<string, any>,
+  headers: Record<string, string>
+) => Promise<CheckRequestResult> | CheckRequestResult
+```
+
+## MergeRequest {#merge-request}
+
+```ts
+type MergeRequestResult = boolean | string
+
+/**
+ * Custom file merge request
+ */
+type MergeRequest = (
+  file: FileContext,
+  data: Record<string, any>,
+  headers: Record<string, string>
+) => Promise<MergeRequestResult> | MergeRequestResult
 ```

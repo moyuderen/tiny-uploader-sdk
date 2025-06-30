@@ -51,7 +51,7 @@ export default defineConfig({
                 { text: 'Qucick Start', link: '/en/quick-start' },
                 { text: 'Props', link: '/en/props' },
                 { text: 'Callbacks', link: '/en/callbacks' },
-                { text: 'Functions', link: '/en/functions' }
+                { text: 'Methods', link: '/en/functions' }
               ]
             },
             {

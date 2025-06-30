@@ -1,60 +1,60 @@
-# 枚举
+# Enums
 
 ## Status {#status}
 
 ```typescript
-/** v2.1.1之前 file和chunk状态公用*/
+/** Before v2.1.1, file and chunk shared the same status enum */
 
 enum Status {
-  /** 文件初始化状态 */
+  /** File initial state */
   Init = 'init',
 
-  /** 计算hash中（读取文件） */
+  /** Calculating hash (reading the file) */
   Reading = 'reading',
 
   /**
-   * 1.file文件hash计算完成
-   * 2.chunk初始化状态是Ready
+   * 1. File hash calculation completed
+   * 2. Initial state for chunk is Ready
    */
   Ready = 'ready',
 
-  /** 1.chunk的已经发起请求，Promise处于Pending状态 */
+  /** 1. Chunk request has been initiated, Promise is in Pending state */
   Pending = 'pending',
 
   /**
-   * 1.file在上传中
-   * 2.chunk上传中
+   * 1. File is uploading
+   * 2. Chunk is uploading
    */
   Uploading = 'uploading',
 
-  /** 文件的所有chunk上传完成, 准备合并文件 */
+  /** All chunks of the file have been uploaded, ready to merge */
   UploadSuccess = 'uploadSuccess',
 
-  /** 文件所有chunk已经请求上传接口，但是自动重试之后仍有失败时，文件状态为UploadFail */
+  /** All chunks have been requested, but after retries some still failed */
   UploadFail = 'uploadFail',
 
   /**
-   * 1.文件合并成功
-   * 2.chunk上传成功
+   * 1. File merge successful
+   * 2. Chunk upload successful
    */
   Success = 'success',
 
   /**
-   * 1.文件合并失败
-   * 2.chunk上传（所有重试都不成功）失败
+   * 1. File merge failed
+   * 2. Chunk upload failed after all retries
    */
   Fail = 'fail',
 
-  /** 暂停状态 */
+  /** Paused state */
   Pause = 'pause',
 
-  /** 恢复状态 */
+  /** Resumed state */
   Resume = 'resume'
 }
 ```
 
 > [!WARNING]
-> 2.2.0 版本之后拆分为了[`FileStatus`](#file-status)和[`ChunkStatus`](#chunk-status)
+> After version `2.2.0`, this enum is split into [`FileStatus`](#file-status) and [`ChunkStatus`](#chunk-status)
 
 ## Events {#events}
 
@@ -69,53 +69,53 @@ export const Events = {
   FileUploadFail: 'fileUploadFail',
   FileUploadSuccess: 'fileUploadSuccess',
   FileSuccess: 'fileSuccess',
-  // FileMergeFail: 'fileMergeFail', // 2.x版本删除 // [!code --]
+  // FileMergeFail: 'fileMergeFail', // Removed in 2.x // [!code --]
   AllFileSuccess: 'allFilesSuccess',
   Change: 'change'
 }
 ```
 
 > [!WARNING]
-> 2.2.0 版本之后`Events`抽象为了[`Callbacks`](#callbacks)
+> From version `2.2.0`, `Events` has been abstracted as [`Callbacks`](#callbacks)
 
 ## FileStatus {#file-status}
 
 ```typescript
 enum FileStatus {
-  /** 文件初始化状态 */
+  /** File initial state */
   Init = 'init',
 
-  /** 文件添加失败, 添加文件时允许beforeAdd中失败的文件添加到列表，但是状态为AddFail */
+  /** File failed to add. If beforeAdd allows failed files, they'll appear with AddFail status */
   AddFail = 'addFail',
 
-  /** 文件读取中（计算hash中）*/
+  /** File is being read (calculating hash) */
   Reading = 'reading',
 
-  /** 文件hash计算完成；准备上传 */
+  /** File hash calculation completed; ready for upload */
   Ready = 'ready',
 
-  /** checkRequest 存在时，且checkRequest失败 */
+  /** `checkRequest` exists but failed */
   CheckFail = 'checkFail',
 
-  /** 文件上传中 */
+  /** File is uploading */
   Uploading = 'uploading',
 
-  /** 文件上传完成；所有chunk上传完成，准备合并文件 */
+  /** All chunks uploaded; ready to merge file */
   UploadSuccess = 'uploadSuccess',
 
-  /** 文件上传失败；有chunk上传失败 */
+  /** File upload failed; some chunks failed */
   UploadFail = 'uploadFail',
 
-  /** 文件上传成功 且 合并成功 */
+  /** File upload and merge both succeeded */
   Success = 'success',
 
-  /** 文件合并失败 */
+  /** File merge failed */
   Fail = 'fail',
 
-  /** 文件暂停上传 */
+  /** File upload paused */
   Pause = 'pause',
 
-  /** 文件恢复上传 */
+  /** File upload resumed */
   Resume = 'resume'
 }
 ```
@@ -124,19 +124,19 @@ enum FileStatus {
 
 ```typescript
 enum ChunkStatus {
-  /** chunk初始化状态是Ready */
+  /** Initial state of chunk is Ready */
   Ready = 'ready',
 
-  /** chunk创建请求成功，Promise处于Pending状态 */
+  /** Chunk request created successfully, Promise is pending */
   Pending = 'pending',
 
-  /** chunk上传中 */
+  /** Chunk is uploading */
   Uploading = 'uploading',
 
-  /** chunk上传成功 */
+  /** Chunk uploaded successfully */
   Success = 'success',
 
-  /** chunk上传失败（所有重试次数完成后 都不成功）*/
+  /** Chunk upload failed after all retries */
   Fail = 'fail'
 }
 ```
@@ -144,54 +144,54 @@ enum ChunkStatus {
 ## Callbacks {#callbacks}
 
 ```typescript
-// 回调函数名称
+// Callback function names
 enum Callbacks {
-  /** 文件超出limit限制 */
+  /** File count exceeds limit */
   Exceed = 'exceed',
 
-  /** 单个文件添加成功 */
+  /** Single file added successfully */
   FileAdded = 'fileAdded',
 
-  /** 文件添加失败 */
+  /** File failed to add */
   FileAddFail = 'fileAddFail',
 
-  /** 所有文件添加成功 */
+  /** All files added successfully */
   FilesAdded = 'filesAdded',
 
-  /** 文件状态改变 */
+  /** File status changed */
   FileChange = 'fileChange',
 
-  /** 文件删除 */
+  /** File removed */
   FileRemove = 'fileRemove',
 
-  /** 文件开始计算hash */
+  /** File hash calculation started */
   FileReadStart = 'fileReadStart',
 
-  /** 文件计算进度 */
+  /** File hash calculation progress */
   FileReadProgress = 'fileReadProgress',
 
-  /** 文件hash计算完成 */
+  /** File hash calculation completed */
   FileReadEnd = 'fileReadEnd',
 
-  /** 文件hash计算失败 */
+  /** File hash calculation failed */
   FileReadFail = 'fileReadFail',
 
-  /** 文件上传进度 */
+  /** File upload progress */
   FileProgress = 'fileProgress',
 
-  /** 文件上传成功 */
+  /** File uploaded successfully */
   FileUploadSuccess = 'fileUploadSuccess',
 
-  /** 文件上传失败 */
+  /** File upload failed */
   FileUploadFail = 'fileUploadFail',
 
-  /** 文件合并成功 */
+  /** File merged successfully */
   FileSuccess = 'fileSuccess',
 
-  /** 文件合并失败 */
+  /** File merge failed */
   FileFail = 'fileFail',
 
-  /** 所有文件上传成功 */
+  /** All files uploaded successfully */
   AllFileSuccess = 'allFileSuccess'
 }
 ```
@@ -199,21 +199,21 @@ enum Callbacks {
 ## CheckStatus {#check-status}
 
 ```typescript
-// check 文件上传状态
+// File upload check status
 enum CheckStatus {
-  /** 文件还没上传 */
+  /** File has not been uploaded */
   None = 'none',
 
   /**
-   * 1. 部分上传成功
-   * 2. 返回已上传chunk的索引
-   * */
+   * 1. Partial chunks uploaded
+   * 2. Returned with indices of uploaded chunks
+   */
   Part = 'part',
 
-  /** 准备合并，可以直接进行合并操作 */
+  /** Ready to merge; can proceed with merge operation */
   WaitMerge = 'waitMerge',
 
-  /** 上传成功, 返回文件obs地址 */
+  /** Upload successful, returns OBS URL */
   Success = 'success'
 }
 ```
@@ -221,15 +221,15 @@ enum CheckStatus {
 ## ProcessType {#process-type}
 
 ```typescript
-// 文件上传进程
+// File upload process type
 enum ProcessType {
-  /** 来自check接口 */
+  /** From check API */
   Check = 'check',
 
-  /** 来自upload接口 */
+  /** From upload API */
   Upload = 'upload',
 
-  /** 来自merge接口 */
+  /** From merge API */
   Merge = 'merge'
 }
 ```

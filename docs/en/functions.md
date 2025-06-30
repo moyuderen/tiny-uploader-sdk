@@ -1,21 +1,21 @@
-# 方法
+# Methods
 
 ## assignBrowse
 
-绑定上传按钮 dom
+Bind an upload button DOM element.
 
 ```ts
 uploader.assignBrowse(domNode: HTMLElement, attributes: UserAttributes)
 ```
 
-attributes 是 input 文件的属性对象，可覆盖属性中的 accept 和 multiple，或者添加别的属性
+`attributes` is an object representing the input element's file-related attributes. It can override `accept` and `multiple`, or add other attributes.
 
-> [!NOTE]
-> 枚举[`UserAttributes`](/sdk/enum.md#user-attributes)
+> [!NOTE]  
+> See enum [`UserAttributes`](/en/enum.md#user-attributes)
 
 ## assignDrop
 
-绑定上传拖拽 dom
+Bind a DOM element for drag-and-drop file uploads.
 
 ```ts
 uploader.assignDrop(domNode: HTMLElement)
@@ -23,7 +23,7 @@ uploader.assignDrop(domNode: HTMLElement)
 
 ## submit
 
-`autoUpload`为`false`时可手动触发上传
+Manually trigger upload when `autoUpload` is set to `false`.
 
 ```js
 uploader.submit()
@@ -31,7 +31,7 @@ uploader.submit()
 
 ## clear
 
-删除所有文件，且取消正在上传中文件的请求
+Remove all files and cancel all ongoing upload requests.
 
 ```js
 uploader.clear()
@@ -39,7 +39,7 @@ uploader.clear()
 
 ## remove
 
-删除某个文件，参数是文件 file, 如果没有参数时效果同`clear`方法
+Remove a specific file. If no argument is passed, this behaves the same as `clear`.
 
 ```js
 uploader.remove(file)
@@ -47,7 +47,7 @@ uploader.remove(file)
 
 ## pause
 
-暂停某个文件上传，参数是文件 file
+Pause the upload of a specific file.
 
 ```js
 uploader.pause(file)
@@ -55,7 +55,7 @@ uploader.pause(file)
 
 ## resume
 
-重新启动某个暂停文件，参数是文件 file
+Resume uploading a specific paused file.
 
 ```js
 uploader.resume(file)
@@ -63,7 +63,7 @@ uploader.resume(file)
 
 ## retry
 
-手动触发某个文件重试，参数是文件 file
+Manually retry uploading a specific file.
 
 ```js
 uploader.retry(file)
