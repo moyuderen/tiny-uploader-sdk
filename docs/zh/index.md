@@ -3,13 +3,13 @@
 layout: home
 
 hero:
-  name: 'Uploader'
+  name: '@tinyuploader/sdk'
   text: ''
   tagline: 让上传变的简单
   actions:
     - theme: brand
       text: 'Quick Start'
-      link: /sdk/quick-start
+      link: /zh/quick-start
 
 features:
   - title: 分片上传

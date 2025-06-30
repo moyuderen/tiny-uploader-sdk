@@ -1,13 +1,13 @@
 # 接口类型
 
-## DefaultFile {#default-file}
+## UserFile {#user-file}
 
 ```typescript
-type DefaultFile = {
-  id: string
-  name: string
-  url: string
-}
+type UserFile = {
+  id: string | number;
+  name: string;
+  url: string;
+} & File;
 ```
 
 ## RequestData 上传接口默认参数 {request-data}
@@ -81,7 +81,7 @@ export function request(options) {
 
 ## CustomRequestOption {#custom-request-option}
 
-```ts
+```typescript
 type CustomRequestOption = {
   action: string
   name: string

@@ -3,4 +3,4 @@ layout: doc
 outline: deep
 ---
 
-# sdk
+# FAQ

@@ -1,14 +1,14 @@
-# 参数配置
+# Props
 
 ## accept
 
-`<input type="file" accept='video/*'>`的[accep](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/accept)属性值
+`<input type="file" accept='video/*'>`[accept](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/accept) attribute
 
-- **类型** `string | string[]`
-- **默认值** `*`
-- **使用**
+- **Type** `string | string[]`
+- **Default** `*`
+- **Using**
 
-  1. 可在初始化时配置
+  1. Can be configured when initializing
 
   ```js
   const uploader = new Uploader({
@@ -16,7 +16,7 @@
   })
   ```
 
-  2. 在`assignBrowse`方法中添加, 会覆盖初始化配置
+  2. Can be configured when calling `assignBrowse` method, which will override the initial configuration
 
   ```js
   uploader.assignBrowse(domNode, { accept: ['.png'] })
@@ -24,48 +24,50 @@
 
 ## multiple
 
-`<input type="file" multiple>`的`multiple`属性值
+`<input type="file" multiple>`[multiple](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/multiple) attribute
 
-- **类型** `boolean`
-- **默认值** `true`
+- **Type** `boolean`
+- **Default** `true`
 
 ## fileList
 
-默认文件列表
+Default file list
 
-- **类型** `DefaultFile[]`, 类型[DefaultFile](/sdk/interface.md#default-file)
-- **默认值** `[]`
+- **Type** [`UserFile[]`](/sdk/interface.md#user-file),
+- **Default** `[]`
 
 ## limit
 
-上传的最大数量
+Upload file limit max count
 
-- **类型** `number`
-- **默认值** `10`
+- **Type** `number`
+- **Default** `10`
 
 > [!NOTE]
-> 值为`0`时不限制数量
+> if value is `0`, will not limit count
 
 ## autoUpload
 
-是否在选择文件之后自动上传
+auto upload after select file
 
-- **类型** `boolean`
-- **默认值** `true`
+- **Type** `boolean`
+- **Default** `true`
 
 ## customGenerateUid
 
-文件`uid`的自定义方法, 如果不是函数则使用 sdk 内部自己的计算方式,如果是函数则使用函数的返回值
+file uid generate function, if not function, will use sdk own function
 
-**类型** `function | null`
+**Type** `function | null`
 
-**参数** `file` [File](./instance.md#file)的实例
-**默认值** `null`
-**示例**
+**Params** `file`, [FileContext](./instance.md#file-context)
 
-```js
+**Default** `null`
+
+**Example**
+
+```ts
 let id = 0
-const customGenerateUid = (file) => {
+const customGenerateUid = (file: FileContext) => {
   return Date.now + file.name + id++
 }
 const uploader = new Uploader({
@@ -75,27 +77,28 @@ const uploader = new Uploader({
 
 ## chunkSize
 
-上传文件时的切片大小，单位是`bit`, 例如`1024 * 1024 * 4`代表`4M`大小
+size of chunk when upload file, unit is `bit`, for example `1024 * 1024 * 4` means `4M`
 
-**类型** `number`
+**Type** `number`
 
-**默认值** `1024 * 1024 * 2`
+**Default** `1024 * 1024 * 2`
 
 ## addFailToRemove
 
-添加文件失败时是否删除失败文件
+if add file failed, will remove file from fileList
 
-**类型** `boolean`
+**Type** `boolean`
 
-**默认值** `true`
+**Default** `true`
 
 ## fakeProgress
 
-是否展示上传的最大进度值（解决进度条的回退现象）。为`false`时,因为在某个 chunk 上传失败后，chunk 进度会变为 0，文件的进度因此会有回退抖动现象
+show max progress value when upload file, because when chunk upload failed, chunk progress will be 0, so the file progress will have a back and forth jittering
 
-- **类型** `boolean`
+**Type** `boolean`
 
-- **默认值** `true`
+**Default** `true`
+
 
 ## withHash
 
