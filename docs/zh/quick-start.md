@@ -1,14 +1,16 @@
-# Quick Start
+# 快速上手
 
-## Install
+## 安装
 
 ```bash
 npm i @tinyuploader/sdk -S
 ```
 
-## Create Instance
+## 创建实例
 
-Use class to create instance
+创建实例的方式有两种：
+
+1. 使用类创建实例
 
 ```typescript
 import { Uploader } from '@tinyuploader/sdk'
@@ -20,7 +22,7 @@ const uploader = new Uploader({
 uploader.assignBrowse(document.querySelector('.uploader-btn'))
 ```
 
-Or, Use `create` function to create instance
+2. 使用函数`create`创建实例
 
 ```typescript
 import { create } from '@tinyuploader/sdk'
@@ -32,7 +34,6 @@ const uploader = create({
 uploader.assignBrowse(document.querySelector('.uploader-btn'))
 ```
 
-## Example
+## 预览示例
 
-<!-- TODO: yiqi demo  -->
-- [Online Demo](https://codepen.io/moyuderen/pen/KKjaqJK)
+- [预览](https://codepen.io/moyuderen/pen/KKjaqJK)

@@ -4,8 +4,11 @@
 
 ```typescript
 type UserFile = {
+  /** 文件id */
   id: string | number;
+  /** 文件名 */
   name: string;
+  /** 文件url */
   url: string;
 } & File;
 ```
@@ -29,68 +32,68 @@ type RequestData = {
 ## Request {#request}
 
 ```ts
-export function request(options) {
-  const {
-    method = 'POST',
-    withCredentials = true,
-    responseType = 'json',
-    action,
-    data,
-    query,
-    headers,
-    name,
-    onSuccess,
-    onFail,
-    onProgress
-  } = options
+function request(options: RequestOptions): RequestResult
 
-  let xhr = new XMLHttpRequest()
-  xhr.responseType = responseType
-  xhr.withCredentials = withCredentials
-  xhr.open(method, action, true)
+type RequestOptions = {
+  /** http method类型 */
+  method?: 'POST' | 'GET' | 'PUT';
+  /** 是否该使用类似 cookie、Authorization 标头 */
+  withCredentials?: boolean;
+  /** 响应的数据类型 */
+  responseType?: 'json' | 'blob' | 'arraybuffer' | 'text' | '';
+  /** 上传接口endpoint */
+  action: string;
+  /** 自定义上传参数 */
+  data: Record<string, any>;
+  /** 上传接口headers */
+  headers: Record<string, string>;
+  /** 文后端接收文件name */
+  name: string;
+  /** 自定义data 包括file上自定义的data */
+  query: Record<string, any>;
+  /** 响应成功回调 */
+  onSuccess?: (e: any, request: any) => void;
+  /** 响应失败回调 */
+  onFail?: (e: any, request: any) => void;
+  /** 上传进度回调 */
+  onProgress?: (e: ProgressEvent) => void;
+};
 
-  const formData = new FormData()
-  Object.entries(data).forEach(([key, value]) => formData.append(key, value))
+type RequestResult = {
+    abort: () => void;
+    canceled?: boolean;
+};
 
-  // 'setRequestHeader' on 'XMLHttpRequest': The object's state must be OPENED
-  if ('setRequestHeader' in xhr) {
-    Object.entries(headers).forEach(([key, value]) => xhr.setRequestHeader(key, value))
-  }
-
-  xhr.addEventListener('timeout', () => onFail(new Error('Request timed out'), xhr))
-  xhr.upload.addEventListener('progress', onProgress)
-  xhr.addEventListener('error', onFail, false)
-  xhr.addEventListener('readystatechange', (e) => {
-    if (xhr.readyState !== 4) return
-    if (xhr.status < 200 || xhr.status >= 300) {
-      onFail(new Error(`xhr: status === ${xhr.status}`), xhr)
-      return
-    }
-    onSuccess(e, xhr)
-  })
-  xhr.send(formData)
-
-  return {
-    abort() {
-      xhr.abort()
-      xhr = null
-    }
-  }
-}
 ```
 
-## CustomRequestOption {#custom-request-option}
-
-```typescript
-type CustomRequestOption = {
-  action: string
-  name: string
-  withCredentials: boolean
-  headers: object
-  data: RequestData
-  query: object
-  onSuccess: (e, response) => void
-  onFail: (e) => void
-  onProgress: (e) => void
+## CheckRequest {#check-request}
+```ts
+type CheckRequestResult = {
+  status: CheckStatus
+  data?: any
 }
+
+/**
+ * 校验上传状态请求
+ */
+type CheckRequest = (
+  file: FileContext,
+  data: Record<string, any>,
+  headers: Record<string, string>
+) => Promise<CheckRequestResult> | CheckRequestResult
 ```
+## MergeRequest {#merge-request}
+
+```ts
+type MergeRequestResult = boolean | string
+/**
+ * 文件合并自定义接口
+ */
+type MergeRequest = (
+  file: FileContext,
+  data: Record<string, any>,
+  headers: Record<string, string>
+) => Promise<MergeRequestResult> | MergeRequestResult
+
+```
+

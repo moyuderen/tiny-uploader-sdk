@@ -101,43 +101,43 @@ export default defineConfig({
           }
         },
         nav: [
-          { text: 'Home', link: '/zh/' },
+          { text: '主页', link: '/zh/' },
           {
-            text: 'About',
+            text: '关于',
             items: [
               {
-                text: 'Repository',
+                text: '仓库代码',
                 link: 'https://github.com/moyuderen/tiny-uploader-sdk'
               },
               {
-                text: 'Changelog',
+                text: '版本历史',
                 link: 'https://github.com/moyuderen/tiny-uploader-sdk/blob/main/CHANGELOG.md'
               }
             ]
           },
           {
-            text: 'Mock server',
+            text: '服务端mock接口',
             link: 'https://moyuderen.github.io/tiny-uploader-server/zh/'
           }
         ],
         sidebar: {
           '/zh/': [
             {
-              text: 'Guide',
+              text: '开始',
               items: [
-                { text: 'Qucick Start', link: '/zh/quick-start' },
-                { text: 'Props', link: '/zh/props' },
-                { text: 'Callbacks', link: '/zh/callbacks' },
-                { text: 'Functions', link: '/zh/functions' }
+                { text: '快速上手', link: '/zh/quick-start' },
+                { text: '配置', link: '/zh/props' },
+                { text: '回调函数', link: '/zh/callbacks' },
+                { text: '方法', link: '/zh/functions' }
               ]
             },
             {
-              text: 'Other',
+              text: '其他',
               collapsed: false,
               items: [
-                { text: 'Instance', link: '/zh/instance' },
-                { text: 'Enum', link: '/zh/enum' },
-                { text: 'Interface', link: '/zh/interface' }
+                { text: '实例', link: '/zh/instance' },
+                { text: '枚举', link: '/zh/enum' },
+                { text: '类型', link: '/zh/interface' }
               ]
             },
             {

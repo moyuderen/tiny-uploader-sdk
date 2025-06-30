@@ -8,7 +8,7 @@ hero:
   tagline: 让上传变的简单
   actions:
     - theme: brand
-      text: 'Quick Start'
+      text: '快速上手'
       link: /zh/quick-start
 
 features:

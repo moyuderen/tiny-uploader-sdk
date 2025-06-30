@@ -209,11 +209,3 @@ uploader.on(Callbacks.AllFileSuccess, (fileList) => {
   // ...
 })
 ```
-
-```
-
-```
-
-```
-
-```

@@ -5,28 +5,28 @@ layout: home
 hero:
   name: '@tinyuploader/sdk'
   text: ''
-  tagline: 让上传变的简单
+  tagline: 'A simple uploader'
   actions:
     - theme: brand
       text: 'Quick Start'
       link: /en/quick-start
 
 features:
-  - title: 分片上传
-    details: 支持将文件切割成多个自定义大小的chunk上传
+  - title: Chunked Upload
+    details: Support to upload large file by chunk, and support custom chunk size
 
-  - title: 自动重试
-    details: 在某个chunk上传失败建立补偿机制，支持配置重试次数和重试间隔
+  - title: Auto Retry
+    details: If some chunk upload failed, we will retry it automatically, and you can config retry times and retry interval
 
-  - title: 手动重试
-    details: 自动重试失败后，支持手动触发重试功能
+  - title: Manual Retry
+    details: If auto retry failed, you can trigger retry manually
 
-  - title: 并发请求
-    details: 支持配置请求的并发数量
+  - title: Concurrent Request
+    details: Support config concurrent request count
 
-  - title: 丰富的配置
-    details: 支持文件相关，请求的自定义参数，自定义headers, 是否启用文件的hash计算等
+  - title: Custom Request
+    details: Support custom request, such as custom headers, custom query params, enable hash calculation, etc.
 
-  - title: 上传前的文件校验
-    details: 支持文件上传前校验通过接口判断，是已经上传、部分上传、未上传处理不同逻辑
+  - title: Pre-check
+    details: Support to pre-check file status, such as uploaded, partial uploaded, not uploaded, seconds upload etc.
 ---
